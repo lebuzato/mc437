@@ -124,7 +124,8 @@ public class RBE {
 
   public static void setURLs()
   {
-	 www = www1 + "servlet/";
+	 //www = www1 + "servlet/";
+	 www = www1;
 	 String wwwTPCW = www1 + "tpcw/";
 	 homeURL = www+"TPCW_home_interaction";
 	 shopCartURL = www+"TPCW_shopping_cart_interaction";
