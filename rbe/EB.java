@@ -339,7 +339,6 @@ public class EB extends Thread {
       }
       catch (IOException ioe) {
 	rbe.stats.error("Unable to open URL." , url.toExternalForm());
-	ioe.printStackTrace();
 	retry=true;
 	continue;
       }
