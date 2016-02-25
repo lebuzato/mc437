@@ -57,7 +57,7 @@ public class TPCW_Util {
     
     //public final String SESSION_ID="JIGSAW_SESSION_ID";
     //public static final String SESSION_ID="JServSessionIdroot";
-    public static final String SESSION_ID="$sessionid$";
+    public static final String SESSION_ID="jsessionid=";
 
     //This must be equal to the number of items in the ITEM table
     public static final int NUM_ITEMS = 10000;

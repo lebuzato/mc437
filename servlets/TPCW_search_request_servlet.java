@@ -80,7 +80,7 @@ public class TPCW_search_request_servlet extends HttpServlet {
       //Insert Promotional processing
       TPCW_promotional_processing.DisplayPromotions(out, req, res,-1);
 
-      out.print("<FORM ACTION=\"/servlet/TPCW_execute_search;$sessionid$"+
+      out.print("<FORM ACTION=\"/servlet/TPCW_execute_search;jsessionid="+
 		req.getRequestedSessionId()+"\" METHOD=\"get\">\n");
       out.print("<TABLE ALIGN=\"center\"><TR><TD ALIGN=\"right\">\n");
       out.print("<H3>Search by:</H3></TD><TD WIDTH=\"100\"></TD></TR>\n");
