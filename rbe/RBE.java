@@ -89,7 +89,8 @@ import rbe.util.Pad;
 public class RBE {
 
   // URLs
-  public static String www1 = "http://ironsides.cs.wisc.edu:8001/";
+//  public static String www1 = "http://ironsides.cs.wisc.edu:8001/";
+  public static String www1 = "http://localhost:8080/tpcw/";
   public static String www;
   public static String homeURL;
   public static String shopCartURL;
@@ -671,7 +672,7 @@ public class RBE {
     "ROMANCE",
     "SELF-HELP",
     "SCIENCE-NATURE",
-    "SCIENCE-FICTION",
+    "SCIENCE_FICTION",
     "SPORTS",
     "YOUTH",
     "TRAVEL"
