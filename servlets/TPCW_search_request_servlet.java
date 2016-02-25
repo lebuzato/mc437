@@ -80,7 +80,7 @@ public class TPCW_search_request_servlet extends HttpServlet {
       //Insert Promotional processing
       TPCW_promotional_processing.DisplayPromotions(out, req, res,-1);
 
-      out.print("<FORM ACTION=\"/servlet/TPCW_execute_search;jsessionid="+
+      out.print("<FORM ACTION=\"./TPCW_execute_search;jsessionid="+
 		req.getRequestedSessionId()+"\" METHOD=\"get\">\n");
       out.print("<TABLE ALIGN=\"center\"><TR><TD ALIGN=\"right\">\n");
       out.print("<H3>Search by:</H3></TD><TD WIDTH=\"100\"></TD></TR>\n");
@@ -105,7 +105,7 @@ public class TPCW_search_request_servlet extends HttpServlet {
 	  out.print("<INPUT TYPE=HIDDEN NAME=\"C_ID\" value = \"" + 
 		    C_ID + "\">\n");
     
-      url = "../servlet/TPCW_home_interaction";
+      url = "./TPCW_home_interaction";
       if(SHOPPING_ID != null){
 	  url = url+"?SHOPPING_ID="+SHOPPING_ID;
 	  if(C_ID!=null)
