@@ -89,7 +89,8 @@ import rbe.util.Pad;
 public class RBE {
 
   // URLs
-  public static String www1 = "http://ironsides.cs.wisc.edu:8001/";
+//  public static String www1 = "http://ironsides.cs.wisc.edu:8001/";
+  public static String www1 = "http://localhost:8080/tpcw/";
   public static String www;
   public static String homeURL;
   public static String shopCartURL;
@@ -114,7 +115,8 @@ public class RBE {
   public static final StrStrPattern yourSessionID = 
       //new StrStrPattern("JIGSAW-SESSION-ID=");
       //      new StrStrPattern("JServSessionIdroot=");
-    new StrStrPattern(";$sessionid$");
+//    new StrStrPattern(";$sessionid$");
+      new StrStrPattern(";jsessionid=");
   public static final StrStrPattern endSessionID =
     new StrStrPattern("?");
 
@@ -124,7 +126,8 @@ public class RBE {
 
   public static void setURLs()
   {
-	 www = www1 + "servlet/";
+	 //www = www1 + "servlet/";
+	 www = www1;
 	 String wwwTPCW = www1 + "tpcw/";
 	 homeURL = www+"TPCW_home_interaction";
 	 shopCartURL = www+"TPCW_shopping_cart_interaction";
@@ -147,7 +150,7 @@ public class RBE {
     //public static final String field_sessionID = "JServSessionIdroot";
     
     //public static final String field_sessionID = "JIGSAW-SESSION-ID";
-  public static final String field_sessionID = ";$sessionid$";
+  public static final String field_sessionID = ";jsessionid=";
   public static final String field_shopID = "SHOPPING_ID";
   public static final String field_uname = "UNAME";
   public static final String field_passwd = "PASSWD";

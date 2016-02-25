@@ -77,7 +77,7 @@ public class EBStats {
   private final long [] end_times;
   private int num_interactions = 0;
   private RBE rbe;
-  private final int NUM_INTERACTIONS = 100000;    
+  private final int NUM_INTERACTIONS = 1000000;
 
   // List of retries/errors encount.
   public final Vector errors = new Vector(0);  

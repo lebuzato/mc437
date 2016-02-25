@@ -104,10 +104,11 @@ public class DateArg extends Arg {
 		throw new Arg.Exception("Date argument missing time.", a);
 	 }
 	 try {
-		df.setLenient(true);
-		d = df.parse(args[a]);
+//		df.setLenient(true);
+//		d = df.parse(args[a]);
+                d = new Date(Long.parseLong(args[a]) * 1000);
 	 }
-	 catch(ParseException pe) {
+	 catch(java.lang.Exception pe) {
 		throw new Arg.Exception("Unable to parse date (" + 
 										args[a] + ").", a);
 	 }
