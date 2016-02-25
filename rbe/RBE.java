@@ -672,7 +672,7 @@ public class RBE {
     "ROMANCE",
     "SELF-HELP",
     "SCIENCE-NATURE",
-    "SCIENCE_FICTION",
+    "SCIENCE-FICTION",
     "SPORTS",
     "YOUTH",
     "TRAVEL"
