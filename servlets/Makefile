@@ -1,16 +1,15 @@
 JAVAC = javac
-#TPCW_HOME=/victim5/JavaWebServer2.0
-TPCW_HOME=/usr/WebSphere/AppServer
-SERVLET_HOME=$(TPCW_HOME)/servlets
+TPCW_HOME=$(PWD)
 CLASS_HOME=$(TPCW_HOME)/classes
-#Need to set you class path to:
-#CLASSPATH=/victim5/JavaWebServer2.0/classes:/home/cain/JSDK2.0/lib/jsdk.jar
+SERVLET_HOME=$(CLASS_HOME)
+# Location on Debian of javax.servlet classes:
+CLASSPATH=/usr/share/java/servlet-api-2.5.jar
 
 all: 	$(CLASS_HOME)/Address.class \
 	$(CLASS_HOME)/Book.class \
-	$(CLASS_HOME)/BuyConfirmResult.class \
-	$(CLASS_HOME)/Cart.class \
 	$(CLASS_HOME)/CartLine.class \
+	$(CLASS_HOME)/Cart.class \
+	$(CLASS_HOME)/BuyConfirmResult.class \
 	$(CLASS_HOME)/Customer.class \
 	$(CLASS_HOME)/Order.class \
 	$(CLASS_HOME)/OrderLine.class \
@@ -34,6 +33,12 @@ all: 	$(CLASS_HOME)/Address.class \
 	$(SERVLET_HOME)/TPCW_product_detail_servlet.class \
 	$(SERVLET_HOME)/TPCW_search_request_servlet.class \
 	$(SERVLET_HOME)/TPCW_shopping_cart_interaction.class
+
+clean:
+	rm -rf $(CLASS_HOME)/*.class
+
+deploy: all
+	cp -v $(CLASS_HOME)/*.class $(DEPLOY_HOME)
 
 #stand alone classes
 $(CLASS_HOME)/Address.class: Address.java
@@ -67,53 +72,53 @@ $(CLASS_HOME)/TPCW_Database.class: TPCW_Database.java
 	$(JAVAC) -d $(CLASS_HOME) TPCW_Database.java
 
 $(CLASS_HOME)/TPCW_promotional_processing.class: TPCW_promotional_processing.java
-	$(JAVAC) -d $(CLASS_HOME) TPCW_promotional_processing.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(CLASS_HOME) TPCW_promotional_processing.java
 
 $(CLASS_HOME)/TPCW_say_hello.class: TPCW_say_hello.java
-	$(JAVAC) -d $(CLASS_HOME) TPCW_say_hello.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(CLASS_HOME) TPCW_say_hello.java
 
 $(CLASS_HOME)/TPCW_Util.class: TPCW_Util.java
 	$(JAVAC) -d $(CLASS_HOME) TPCW_Util.java
 
 #servlets
 $(SERVLET_HOME)/TPCW_admin_request_servlet.class: TPCW_admin_request_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_admin_request_servlet.java 
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_admin_request_servlet.java 
 
 $(SERVLET_HOME)/TPCW_admin_response_servlet.class: TPCW_admin_response_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_admin_response_servlet.java 
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_admin_response_servlet.java 
 
 $(SERVLET_HOME)/TPCW_best_sellers_servlet.class: TPCW_best_sellers_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_best_sellers_servlet.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_best_sellers_servlet.java
 
 $(SERVLET_HOME)/TPCW_buy_confirm_servlet.class: TPCW_buy_confirm_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_buy_confirm_servlet.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_buy_confirm_servlet.java
 
 $(SERVLET_HOME)/TPCW_buy_request_servlet.class: TPCW_buy_request_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_buy_request_servlet.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_buy_request_servlet.java
 
 $(SERVLET_HOME)/TPCW_customer_registration_servlet.class: TPCW_customer_registration_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_customer_registration_servlet.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_customer_registration_servlet.java
 
 $(SERVLET_HOME)/TPCW_execute_search.class: TPCW_execute_search.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_execute_search.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_execute_search.java
 
 $(SERVLET_HOME)/TPCW_home_interaction.class: TPCW_home_interaction.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_home_interaction.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_home_interaction.java
 
 $(SERVLET_HOME)/TPCW_new_products_servlet.class: TPCW_new_products_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_new_products_servlet.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_new_products_servlet.java
 
 $(SERVLET_HOME)/TPCW_order_display_servlet.class: TPCW_order_display_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_order_display_servlet.java 
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_order_display_servlet.java 
 
 $(SERVLET_HOME)/TPCW_order_inquiry_servlet.class: TPCW_order_inquiry_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_order_inquiry_servlet.java 
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_order_inquiry_servlet.java 
 
 $(SERVLET_HOME)/TPCW_product_detail_servlet.class: TPCW_product_detail_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_product_detail_servlet.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_product_detail_servlet.java
 
 $(SERVLET_HOME)/TPCW_search_request_servlet.class: TPCW_search_request_servlet.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_search_request_servlet.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_search_request_servlet.java
 
 $(SERVLET_HOME)/TPCW_shopping_cart_interaction.class: TPCW_shopping_cart_interaction.java
-	$(JAVAC) -d $(SERVLET_HOME) TPCW_shopping_cart_interaction.java
+	$(JAVAC) -classpath $(CLASSPATH):$(CLASS_HOME) -d $(SERVLET_HOME) TPCW_shopping_cart_interaction.java
