@@ -114,7 +114,8 @@ public class RBE {
   public static final StrStrPattern yourSessionID = 
       //new StrStrPattern("JIGSAW-SESSION-ID=");
       //      new StrStrPattern("JServSessionIdroot=");
-    new StrStrPattern(";$sessionid$");
+//    new StrStrPattern(";$sessionid$");
+      new StrStrPattern(";jsessionid=");
   public static final StrStrPattern endSessionID =
     new StrStrPattern("?");
 
@@ -148,7 +149,7 @@ public class RBE {
     //public static final String field_sessionID = "JServSessionIdroot";
     
     //public static final String field_sessionID = "JIGSAW-SESSION-ID";
-  public static final String field_sessionID = ";$sessionid$";
+  public static final String field_sessionID = ";jsessionid=";
   public static final String field_shopID = "SHOPPING_ID";
   public static final String field_uname = "UNAME";
   public static final String field_passwd = "PASSWD";
