@@ -1103,6 +1103,8 @@ public class TPCW_Database {
 	}
     }
 
+    private static int max_addr_id_taken = 0;
+
     public static int enterAddress(Connection con,  // Do we need to do this as part of a transaction?
 				   String street1, String street2,
 				   String city, String state,
@@ -1155,16 +1157,23 @@ public class TPCW_Database {
 
 		PreparedStatement get_max_addr_id = con.prepareStatement
 		    ("SELECT max(addr_id) FROM ADDRESS");
-		synchronized(Address.class) {
-		    ResultSet rs2 = get_max_addr_id.executeQuery();
-		    rs2.next();
-		    addr_id = rs2.getInt(1)+1;
-		    rs2.close();
-		    //Need to insert a new row in the address table
-		    insert_address_row.setInt(1, addr_id);
-		    insert_address_row.executeUpdate();
-		}
+		ResultSet rs2 = get_max_addr_id.executeQuery();
+		rs2.next();
+		addr_id = rs2.getInt(1)+1;
+		rs2.close();
 		get_max_addr_id.close();
+
+		// Concurrent requests may take the same address id, since
+		// new added addresses are only consolidated with a commit.
+		synchronized(Address.class) {
+            if (addr_id <= max_addr_id_taken) {
+                addr_id = max_addr_id_taken + 1;
+            }
+            max_addr_id_taken = addr_id;
+		}
+
+		insert_address_row.setInt(1, addr_id);
+		insert_address_row.executeUpdate();
 		insert_address_row.close();
 	    } else { //We actually matched
 		addr_id = rs.getInt("addr_id");
@@ -1177,6 +1186,7 @@ public class TPCW_Database {
 	return addr_id;
     }
 
+    private static int last_order_id_taken = 0;
  
     public static int enterOrder(Connection con, int customer_id, Cart cart, int ship_addr_id, String shipping, double c_discount) {
 	// returns the new order_id
@@ -1200,16 +1210,23 @@ public class TPCW_Database {
 	    PreparedStatement get_max_id = con.prepareStatement
 		("SELECT count(o_id) FROM ORDERS");
 	    //selecting from order_line is really slow!
-	    synchronized(Order.class) {
 		ResultSet rs = get_max_id.executeQuery();
 		rs.next();
 		o_id = rs.getInt(1) + 1;
 		rs.close();
+	    get_max_id.close();
+
+		// Concurrent requests may take the same order id, since a
+	    // new ORDERS entry is only consolidated after the commit.
+	    synchronized(Order.class) {
+            if (o_id <= last_order_id_taken) {
+                o_id = last_order_id_taken + 1;
+            }
+            last_order_id_taken = o_id;
+	    }
 		
 		insert_row.setInt(1, o_id);
 		insert_row.executeUpdate();
-	    }
-	    get_max_id.close();
 	    insert_row.close();
 	} catch (java.lang.Exception ex) {
 	    ex.printStackTrace();
