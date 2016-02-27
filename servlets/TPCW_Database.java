@@ -363,7 +363,7 @@ public class TPCW_Database {
 	    // Prepare SQL
 	    Connection con = getConnection();
 	    PreparedStatement statement = con.prepareStatement
-		("UPDATE ITEM SET i_cost = ?, i_image = ?, i_thumbnail = ?, i_pub_date = CURRENT DATE WHERE i_id = ?");
+		("UPDATE ITEM SET i_cost = ?, i_image = ?, i_thumbnail = ?, i_pub_date = CURRENT_DATE WHERE i_id = ?");
 
 	    // Set parameter
 	    statement.setDouble(1, cost);
@@ -645,7 +645,7 @@ public class TPCW_Database {
 		PreparedStatement insert_cart = con.prepareStatement
 		    ("INSERT into SHOPPING_CART (sc_id, sc_time) " + 
 		     "VALUES ((SELECT COUNT(*) FROM SHOPPING_CART)," + 
-		     "CURRENT TIMESTAMP)");
+		     "CURRENT_TIMESTAMP)");
 		insert_cart.executeUpdate();
 		get_next_id.close();
 		con.commit();
@@ -789,7 +789,7 @@ public class TPCW_Database {
     private static void resetCartTime(Connection con, int SHOPPING_ID){
 	try {
 	    PreparedStatement statement = con.prepareStatement
-		("UPDATE SHOPPING_CART SET sc_time = CURRENT TIMESTAMP WHERE sc_id = ?");
+		("UPDATE SHOPPING_CART SET sc_time = CURRENT_TIMESTAMP WHERE sc_id = ?");
 	
 	    // Set parameter
 	    statement.setInt(1, SHOPPING_ID);
@@ -841,7 +841,7 @@ public class TPCW_Database {
 	    // Prepare SQL
 	    Connection con = getConnection();
 	    PreparedStatement updateLogin = con.prepareStatement
-		("UPDATE CUSTOMER SET c_login = CURRENT TIMESTAMP, c_expiration = CURRENT TIMESTAMP + 2 HOURS WHERE c_id = ?");
+		("UPDATE CUSTOMER SET c_login = CURRENT_TIMESTAMP, c_expiration = CURRENT_TIMESTAMP + INTERVAL '2 HOURS' WHERE c_id = ?");
 	    
 	    // Set parameter
 	    updateLogin.setInt(1, C_ID);
@@ -1069,7 +1069,7 @@ public class TPCW_Database {
 	    // Prepare SQL
 	    PreparedStatement statement = con.prepareStatement
 		("INSERT into CC_XACTS (cx_o_id, cx_type, cx_num, cx_name, cx_expire, cx_xact_amt, cx_xact_date, cx_co_id) " + 
-		 "VALUES (?, ?, ?, ?, ?, ?, CURRENT DATE, (SELECT co_id FROM ADDRESS, COUNTRY WHERE addr_id = ? AND addr_co_id = co_id))");
+		 "VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE, (SELECT co_id FROM ADDRESS, COUNTRY WHERE addr_id = ? AND addr_co_id = co_id))");
 	    
 	    // Set parameter
 	    statement.setInt(1, o_id);           // cx_o_id
@@ -1187,14 +1187,15 @@ public class TPCW_Database {
 		("INSERT into ORDERS (o_id, o_c_id, o_date, o_sub_total, " + 
 		 "o_tax, o_total, o_ship_type, o_ship_date, " + 
 		 "o_bill_addr_id, o_ship_addr_id, o_status) " + 
-		 "VALUES (?, ?, CURRENT DATE, ?, 8.25, ?, ?, CURRENT DATE + ? DAYS, ?, ?, 'Pending')");
+		 "VALUES (?, ?, CURRENT_DATE, ?, 8.25, ?, ?, " +
+         "CURRENT_DATE + INTEGER '" + TPCW_Util.getRandom(7) + "'," +
+         "?, ?, 'Pending')");
 	    insert_row.setInt(2, customer_id);
 	    insert_row.setDouble(3, cart.SC_SUB_TOTAL);
 	    insert_row.setDouble(4, cart.SC_TOTAL);
 	    insert_row.setString(5, shipping);
-	    insert_row.setInt(6, TPCW_Util.getRandom(7));
-	    insert_row.setInt(7, getCAddrID(con, customer_id));
-	    insert_row.setInt(8, ship_addr_id);
+	    insert_row.setInt(6, getCAddrID(con, customer_id));
+	    insert_row.setInt(7, ship_addr_id);
 
 	    PreparedStatement get_max_id = con.prepareStatement
 		("SELECT count(o_id) FROM ORDERS");
