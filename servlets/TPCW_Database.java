@@ -53,114 +53,39 @@
  *
  ************************************************************************/
 
-import java.io.*;
-import java.net.URL;
 import java.sql.*;
-import java.lang.Math.*;
 import java.util.*;
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class TPCW_Database {
 
-    static String driverName = "COM.ibm.db2.jdbc.app.DB2Driver";
-    static String jdbcPath = "jdbc:db2:tpcw2";
-    // Pool of *available* connections.
-    static Vector availConn = new Vector(0);
-    static int checkedOut = 0;
-    static int totalConnections = 0;
-    static int createdConnections = 0;
-    static int closedConnections = 0;
-    
-    //    private static final boolean use_connection_pool = false;
-    private static final boolean use_connection_pool = true;
-    public static final int maxConn = 500;
-    
-    // Here's what the db line looks like for postgres
-    //public static final String url = "jdbc:postgresql://eli.ece.wisc.edu/tpcwb";
-
-    
-    // Get a connection from the pool.
     public static synchronized Connection getConnection() {
-	if (!use_connection_pool) {
-	    return getNewConnection();
-	} else {
-	    Connection con = null;
-	    while (availConn.size() > 0) {
-				// Pick the first Connection in the Vector
-				// to get round-robin usage
-		con = (Connection) availConn.firstElement();
-		availConn.removeElementAt(0);
-		try {
-		    if (con.isClosed()) {
-			continue;
-		    }
-		}
-		catch (SQLException e) {
-		    e.printStackTrace();
-		    continue;
-		}
-		
-		// Got a connection.
-		checkedOut++;
-		return(con);
-	    }
-	    
-	    if (maxConn == 0 || checkedOut < maxConn) {
-		con = getNewConnection();	
-		totalConnections++;
-	    }
-
-	    
-	    if (con != null) {
-		checkedOut++;
-	    }
-	    
-	    return con;
-	}
+    	Connection conn = null;
+    	try {
+    		Context initContext = new InitialContext();
+    		Context envContext = (Context) initContext.lookup("java:/comp/env");
+    		DataSource ds = (DataSource) envContext.lookup("jdbc/TPCW");
+    		conn = ds.getConnection();
+    		conn.setAutoCommit(false);
+    	} catch (NamingException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	} catch (SQLException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	return conn;
     }
     
-    // Return a connection to the pool.
     public static synchronized void returnConnection(Connection con)
-    throws java.sql.SQLException
-    {	
-	if (!use_connection_pool) {
-	    con.close();
-	} else {
-	    checkedOut--;
-	    availConn.addElement(con);
-	}
-    }
-
-    // Get a new connection to DB2
-    public static Connection getNewConnection() {
-	try {
-	    Class.forName(driverName);
-	    // Class.forName("postgresql.Driver");
-
-	    // Create URL for specifying a DBMS
-	    Connection con;
-	    while(true) {
-		try {
-		    //   con = DriverManager.getConnection("jdbc:postgresql://eli.ece.wisc.edu/tpcw", "milo", "");
-		    con = DriverManager.getConnection(jdbcPath);
-		    break;  
-		} catch (java.sql.SQLException ex) {
-		    System.err.println("Error getting connection: " + 
-				       ex.getMessage() + " : " +
-				       ex.getErrorCode() + 
-				       ": trying to get connection again.");
-		    ex.printStackTrace();
-		    java.lang.Thread.sleep(1000);
-		}
-	    }
-	    con.setAutoCommit(false);
-	    createdConnections++;
-	    return con;
-	} catch (java.lang.Exception ex) {
-	    ex.printStackTrace();
-	}
-	return null;
+    		throws java.sql.SQLException {
+    	con.close();
     }
 
     public static String[] getName(int c_id) {
