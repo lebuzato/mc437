@@ -1,11 +1,15 @@
-JAVAC = javac
+JAVAC=javac
 TPCW_HOME=$(PWD)
 CLASS_HOME=$(TPCW_HOME)/classes
 SERVLET_HOME=$(CLASS_HOME)
-# Location on Debian of javax.servlet classes:
+## Location on Debian of javax.servlet classes:
 CLASSPATH=/usr/share/java/servlet-api-2.5.jar
 
-all: 	$(CLASS_HOME)/Address.class \
+CATALINA_BASE=/var/lib/tomcat7
+DEPLOY_HOME=$(CATALINA_BASE)/webapps/tpcw/WEB-INF
+
+all:	$(CLASS_HOME) \
+	$(CLASS_HOME)/Address.class \
 	$(CLASS_HOME)/Book.class \
 	$(CLASS_HOME)/CartLine.class \
 	$(CLASS_HOME)/Cart.class \
@@ -34,11 +38,18 @@ all: 	$(CLASS_HOME)/Address.class \
 	$(SERVLET_HOME)/TPCW_search_request_servlet.class \
 	$(SERVLET_HOME)/TPCW_shopping_cart_interaction.class
 
+$(CLASS_HOME):
+	mkdir -p $(CLASS_HOME)
+
 clean:
+	rm -f tpcw-classes.tar.gz
 	rm -rf $(CLASS_HOME)/*.class
 
-deploy: all
-	cp -v $(CLASS_HOME)/*.class $(DEPLOY_HOME)
+dist: all
+	cd $(CLASS_HOME)/.. && tar cfz tpcw-classes.tar.gz classes/
+
+deploy: dist
+	tar xfz tpcw-classes.tar.gz -C $(DEPLOY_HOME)
 
 #stand alone classes
 $(CLASS_HOME)/Address.class: Address.java
