@@ -737,7 +737,7 @@ class TPCW_Populate {
 	
 	try {
 	    PreparedStatement statement = con.prepareStatement
-		("CREATE TABLE cc_xacts ( CX_O_ID int not null, CX_TYPE varchar(10), CX_NUM varchar(20), CX_NAME varchar(30), CX_EXPIRE date, CX_AUTH_ID char(15), CX_XACT_AMT double, CX_XACT_DATE date, CX_CO_ID int, PRIMARY KEY(CX_O_ID))");
+		("CREATE TABLE cc_xacts ( CX_O_ID int not null, CX_TYPE varchar(10), CX_NUM varchar(20), CX_NAME varchar(30), CX_EXPIRE date, CX_AUTH_ID char(15), CX_XACT_AMT double precision, CX_XACT_DATE date, CX_CO_ID int, PRIMARY KEY(CX_O_ID))");
 	    statement.executeUpdate();
 	    System.out.println("Created table CC_XACTS");
 	} catch (java.lang.Exception ex) {
@@ -748,7 +748,7 @@ class TPCW_Populate {
 
 	try {
 	    PreparedStatement statement = con.prepareStatement
-		("CREATE TABLE country ( CO_ID int not null, CO_NAME varchar(50), CO_EXCHANGE double, CO_CURRENCY varchar(18), PRIMARY KEY(CO_ID))");
+		("CREATE TABLE country ( CO_ID int not null, CO_NAME varchar(50), CO_EXCHANGE double precision, CO_CURRENCY varchar(18), PRIMARY KEY(CO_ID))");
 	    statement.executeUpdate();
 	    System.out.println("Created table COUNTRY");
 	} catch (java.lang.Exception ex) {
@@ -758,7 +758,7 @@ class TPCW_Populate {
 	}
 	try {
 	    PreparedStatement statement = con.prepareStatement
-		("CREATE TABLE customer ( C_ID int not null, C_UNAME varchar(20), C_PASSWD varchar(20), C_FNAME varchar(17), C_LNAME varchar(17), C_ADDR_ID int, C_PHONE varchar(18), C_EMAIL varchar(50), C_SINCE date, C_LAST_LOGIN date, C_LOGIN timestamp, C_EXPIRATION timestamp, C_DISCOUNT real, C_BALANCE double, C_YTD_PMT double, C_BIRTHDATE date, C_DATA varchar(510), PRIMARY KEY(C_ID))");
+		("CREATE TABLE customer ( C_ID int not null, C_UNAME varchar(20), C_PASSWD varchar(20), C_FNAME varchar(17), C_LNAME varchar(17), C_ADDR_ID int, C_PHONE varchar(18), C_EMAIL varchar(50), C_SINCE date, C_LAST_LOGIN date, C_LOGIN timestamp, C_EXPIRATION timestamp, C_DISCOUNT real, C_BALANCE double precision, C_YTD_PMT double precision, C_BIRTHDATE date, C_DATA varchar(510), PRIMARY KEY(C_ID))");
 	    statement.executeUpdate();
 	    System.out.println("Created table CUSTOMER");
 	} catch (java.lang.Exception ex) {
@@ -769,7 +769,7 @@ class TPCW_Populate {
 
 	try {
 	    PreparedStatement statement = con.prepareStatement
-		("CREATE TABLE item ( I_ID int not null, I_TITLE varchar(60), I_A_ID int, I_PUB_DATE date, I_PUBLISHER varchar(60), I_SUBJECT varchar(60), I_DESC varchar(500), I_RELATED1 int, I_RELATED2 int, I_RELATED3 int, I_RELATED4 int, I_RELATED5 int, I_THUMBNAIL varchar(40), I_IMAGE varchar(40), I_SRP double, I_COST double, I_AVAIL date, I_STOCK int, I_ISBN char(13), I_PAGE int, I_BACKING varchar(15), I_DIMENSIONS varchar(25), PRIMARY KEY(I_ID))");
+		("CREATE TABLE item ( I_ID int not null, I_TITLE varchar(60), I_A_ID int, I_PUB_DATE date, I_PUBLISHER varchar(60), I_SUBJECT varchar(60), I_DESC varchar(500), I_RELATED1 int, I_RELATED2 int, I_RELATED3 int, I_RELATED4 int, I_RELATED5 int, I_THUMBNAIL varchar(40), I_IMAGE varchar(40), I_SRP double precision, I_COST double precision, I_AVAIL date, I_STOCK int, I_ISBN char(13), I_PAGE int, I_BACKING varchar(15), I_DIMENSIONS varchar(25), PRIMARY KEY(I_ID))");
 	    statement.executeUpdate();
 	    System.out.println("Created table ITEM");
 	} catch (java.lang.Exception ex) {
@@ -780,7 +780,7 @@ class TPCW_Populate {
 
 	try {
 	    PreparedStatement statement = con.prepareStatement
-		("CREATE TABLE order_line ( OL_ID int not null, OL_O_ID int not null, OL_I_ID int, OL_QTY int, OL_DISCOUNT double, OL_COMMENTS varchar(110), PRIMARY KEY(OL_ID, OL_O_ID))");
+		("CREATE TABLE order_line ( OL_ID int not null, OL_O_ID int not null, OL_I_ID int, OL_QTY int, OL_DISCOUNT double precision, OL_COMMENTS varchar(110), PRIMARY KEY(OL_ID, OL_O_ID))");
 	    statement.executeUpdate();
 	    System.out.println("Created table ORDER_LINE");
 	} catch (java.lang.Exception ex) {
@@ -791,7 +791,7 @@ class TPCW_Populate {
 
 	try {
 	    PreparedStatement statement = con.prepareStatement
-		("CREATE TABLE orders ( O_ID int not null, O_C_ID int, O_DATE date, O_SUB_TOTAL double, O_TAX double, O_TOTAL double, O_SHIP_TYPE varchar(10), O_SHIP_DATE date, O_BILL_ADDR_ID int, O_SHIP_ADDR_ID int, O_STATUS varchar(15), PRIMARY KEY(O_ID))");
+		("CREATE TABLE orders ( O_ID int not null, O_C_ID int, O_DATE date, O_SUB_TOTAL double precision, O_TAX double precision, O_TOTAL double precision, O_SHIP_TYPE varchar(10), O_SHIP_DATE date, O_BILL_ADDR_ID int, O_SHIP_ADDR_ID int, O_STATUS varchar(15), PRIMARY KEY(O_ID))");
 	    statement.executeUpdate();
 	    System.out.println("Created table ORDERS");
 	} catch (java.lang.Exception ex) {
