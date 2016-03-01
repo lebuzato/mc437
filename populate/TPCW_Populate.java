@@ -145,7 +145,6 @@ class TPCW_Populate {
 		("create index scl_i_id on shopping_cart_line(scl_i_id)");
 	    statement13.executeUpdate();
 
-	    con.commit();
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to add indexes");
 	    ex.printStackTrace();
@@ -229,8 +228,6 @@ class TPCW_Populate {
 		    statement.setDate(16, C_BIRTHDATE);
 		    statement.setString(17, C_DATA);
 		    statement.executeUpdate();
-		    if(i % 1000 == 0)
-			con.commit();
 		}catch (java.lang.Exception ex) {
 		    System.err.println("Unable to populate CUSTOMER table");
 		    System.out.println("C_ID=" + i + " C_UNAME=" + C_UNAME + 
@@ -245,7 +242,6 @@ class TPCW_Populate {
 		}
 	    }
 	    System.out.print("\n");
-	    con.commit();
 	}
 	catch (java.lang.Exception ex) {
 	    System.err.println("Unable to populate CUSTOMER table");
@@ -283,10 +279,7 @@ class TPCW_Populate {
 		statement.setString(6, ADDR_ZIP);
 		statement.setInt(7, ADDR_CO_ID);
 		statement.executeUpdate();
-		if(i % 1000 == 0)
-		    con.commit();
 	    }
-	    con.commit();
 	}
 	catch (java.lang.Exception ex) {
 	System.err.println("Unable to populate ADDRESS table");
@@ -331,11 +324,7 @@ class TPCW_Populate {
 		statement.setDate(5, A_DOB);
 		statement.setString(6, A_BIO);
 		statement.executeUpdate();
-		if(i % 1000 == 0)
-		    con.commit();
-		
 	    }
-	    con.commit();
 	}
 	catch (java.lang.Exception ex) {
 	    System.err.println("Unable to populate AUTHOR table");
@@ -424,7 +413,6 @@ class TPCW_Populate {
 		statement.setString(4, currencies[i-1]);
 		statement.executeUpdate();
 	    }
-	    con.commit();
 	}
 	catch (java.lang.Exception ex) {
 	    System.err.println("Unable to populate COUNTRY table");
@@ -549,10 +537,7 @@ class TPCW_Populate {
 		statement.setString(22, I_DIMENSIONS);
 
 		statement.executeUpdate();
-		if(i % 1000 == 0)
-		    con.commit();
 	    }
-	    con.commit();
 	}
 	catch (java.lang.Exception ex) {
 	System.err.println("Unable to populate ITEM table");
@@ -673,10 +658,7 @@ class TPCW_Populate {
 		statement3.setInt(9, CX_CO_ID);
 		statement3.executeUpdate();
 		
-		if(i % 1000 == 0)
-		    con.commit();
 	    }
-	    con.commit();
 	}
 	catch (java.lang.Exception ex) {
 	    System.err.println("Unable to populate CC_XACTS table");
@@ -719,7 +701,6 @@ class TPCW_Populate {
 		PreparedStatement statement = con.prepareStatement
 		    ("DROP TABLE " + tables[i]);
 		statement.executeUpdate();
-		con.commit();
 		System.out.println("Dropped table " + tables[i]);
 	    } catch (java.lang.Exception ex) {
 		System.out.println("Already dropped table " + tables[i]);
@@ -736,7 +717,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE address ( ADDR_ID int not null, ADDR_STREET1 varchar(40), ADDR_STREET2 varchar(40), ADDR_CITY varchar(30), ADDR_STATE varchar(20), ADDR_ZIP varchar(10), ADDR_CO_ID int, PRIMARY KEY(ADDR_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table ADDRESS");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: ADDRESS");
@@ -748,7 +728,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE author ( A_ID int not null, A_FNAME varchar(20), A_LNAME varchar(20), A_MNAME varchar(20), A_DOB date, A_BIO varchar(500), PRIMARY KEY(A_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table AUTHOR");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: AUTHOR");
@@ -760,7 +739,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE cc_xacts ( CX_O_ID int not null, CX_TYPE varchar(10), CX_NUM varchar(20), CX_NAME varchar(30), CX_EXPIRE date, CX_AUTH_ID char(15), CX_XACT_AMT double, CX_XACT_DATE date, CX_CO_ID int, PRIMARY KEY(CX_O_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table CC_XACTS");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: CC_XACTS");
@@ -772,7 +750,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE country ( CO_ID int not null, CO_NAME varchar(50), CO_EXCHANGE double, CO_CURRENCY varchar(18), PRIMARY KEY(CO_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table COUNTRY");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: COUNTRY");
@@ -783,7 +760,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE customer ( C_ID int not null, C_UNAME varchar(20), C_PASSWD varchar(20), C_FNAME varchar(17), C_LNAME varchar(17), C_ADDR_ID int, C_PHONE varchar(18), C_EMAIL varchar(50), C_SINCE date, C_LAST_LOGIN date, C_LOGIN timestamp, C_EXPIRATION timestamp, C_DISCOUNT real, C_BALANCE double, C_YTD_PMT double, C_BIRTHDATE date, C_DATA varchar(510), PRIMARY KEY(C_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table CUSTOMER");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: CUSTOMER");
@@ -795,7 +771,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE item ( I_ID int not null, I_TITLE varchar(60), I_A_ID int, I_PUB_DATE date, I_PUBLISHER varchar(60), I_SUBJECT varchar(60), I_DESC varchar(500), I_RELATED1 int, I_RELATED2 int, I_RELATED3 int, I_RELATED4 int, I_RELATED5 int, I_THUMBNAIL varchar(40), I_IMAGE varchar(40), I_SRP double, I_COST double, I_AVAIL date, I_STOCK int, I_ISBN char(13), I_PAGE int, I_BACKING varchar(15), I_DIMENSIONS varchar(25), PRIMARY KEY(I_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table ITEM");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: ITEM");
@@ -807,7 +782,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE order_line ( OL_ID int not null, OL_O_ID int not null, OL_I_ID int, OL_QTY int, OL_DISCOUNT double, OL_COMMENTS varchar(110), PRIMARY KEY(OL_ID, OL_O_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table ORDER_LINE");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: ORDER_LINE");
@@ -819,7 +793,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE orders ( O_ID int not null, O_C_ID int, O_DATE date, O_SUB_TOTAL double, O_TAX double, O_TOTAL double, O_SHIP_TYPE varchar(10), O_SHIP_DATE date, O_BILL_ADDR_ID int, O_SHIP_ADDR_ID int, O_STATUS varchar(15), PRIMARY KEY(O_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table ORDERS");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: ORDERS");
@@ -831,7 +804,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE shopping_cart ( SC_ID int not null, SC_TIME timestamp, PRIMARY KEY(SC_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table SHOPPING_CART");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: SHOPPING_CART");
@@ -842,7 +814,6 @@ class TPCW_Populate {
 	    PreparedStatement statement = con.prepareStatement
 		("CREATE TABLE shopping_cart_line ( SCL_SC_ID int not null, SCL_QTY int, SCL_I_ID int not null, PRIMARY KEY(SCL_SC_ID, SCL_I_ID))");
 	    statement.executeUpdate();
-	    con.commit();
 	    System.out.println("Created table SHOPPING_CART_LINE");
 	} catch (java.lang.Exception ex) {
 	    System.out.println("Unable to create table: SHOPPING_CART_LINE");
