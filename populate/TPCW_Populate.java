@@ -69,8 +69,9 @@ class TPCW_Populate {
     private static Random rand;
     
     //These variables are dependent on the JDBC database driver used.
-    private static final String driverName = "COM.ibm.db2.jdbc.app.DB2Driver";
-    private static final String dbName = "jdbc:db2:tpcw2";
+    private static final String driverName = "org.postgresql.Driver";
+    private static String dbName = "jdbc:postgresql://localhost:5432/<dbname>"
+                                    + "?user=<username>&password=<password>";
     
     //ATTENTION: The NUM_EBS and NUM_ITEMS variables are the only variables
     //that should be modified in order to rescale the DB.
