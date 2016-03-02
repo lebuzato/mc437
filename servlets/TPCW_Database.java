@@ -1120,7 +1120,7 @@ public class TPCW_Database {
 	try {
 	    PreparedStatement get_co_id = con.prepareStatement
 		("SELECT co_id FROM COUNTRY WHERE co_name = ?");
-	    get_co_id.setString(1, country.toUpperCase());
+	    get_co_id.setString(1, country);
 	    ResultSet rs = get_co_id.executeQuery();
 	    rs.next();
 	    int addr_co_id = rs.getInt("co_id");
